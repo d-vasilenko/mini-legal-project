@@ -121,5 +121,29 @@ function main() {
 
   console.log(`Analyzed ${reports.length} contracts\n`);
 
-  //
+  // 2. Показать краткую информацию по каждому
+  for (const report in reports) {
+    console.log(`📄 ${report['filename']}`);
+    console.log(`   Parties: ${report['parties']}`);
+    console.log(`   Dates: ${len(report['dates'])}`);
+    console.log(`   Amounts: ${len(report['amounts'])}`);
+    console.log(`  ⚠️  Risky clauses: ${len(report['risky_clauses'])}`);
+    console.log();
+
+    // 3. Создать сводку
+    const summary = generateSummary(reports);
+
+    // 4. Сохранить сводку
+    generateReport(summary, "reports/summary.json");
+
+    console.log("=== Summary ===");
+    console.log(`Total contracts: ${summary['total_contracts']}`);
+    console.log(`Contracts with risks: ${summary['contracts_with_risks']}`);
+    console.log(`Total risky clauses: ${summary['total_risky_clauses']}`);
+    console.log(`Most common currency: ${summary['most_common_currency']}`);
+
+    console.log("\n✅ Analysis complete! Check reports/ folder.");
+  }
 }
+
+main();
